@@ -25,7 +25,7 @@ spec:
       containers:
       - #image: gcr.io/sekhrivijaytest13anthosbm/custom-metrics-prometheus:v2
         # Remember to update the image tag everytime you build a new image, or use the image SHA
-        image: custom-metrics-prometheus:v4
+        image: msathetech/custom-metrics-prometheus:v4
         imagePullPolicy: Always
         name: pos-metrics-prometheus
         env:
