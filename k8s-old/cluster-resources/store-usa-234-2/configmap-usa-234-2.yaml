@@ -1,0 +1,19 @@
+apiVersion: v1
+data:
+  franchise-usa-234.properties: |
+    Franchise.NAME=Vijay's Victuals LLC
+    Franchise.REGION=North America
+    Franchise.MARKET=Mid-West
+    Franchise.FRANCHISE_ID=234
+    Franchise.COUNTRY=USA
+  store-usa-234-2.properties: |
+    Franchise.STORE=2
+    Franchise.CITY=Batavia
+    Franchise.STATE=IL
+    Franchise.ZIP=60510
+    Franchise.LATITUDE=41.85047
+    Franchise.LONGITUDE=-88.309235
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: store-config

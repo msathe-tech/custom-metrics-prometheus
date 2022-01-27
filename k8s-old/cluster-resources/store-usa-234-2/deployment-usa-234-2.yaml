@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pos-metrics-prometheus
+  labels:
+    app: pos-metrics-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: pos-metrics-prometheus
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pos-metrics-prometheus
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8080"
+    spec:
+      containers:
+      - #image: gcr.io/sekhrivijaytest13anthosbm/custom-metrics-prometheus:v2
+        # Remember to update the image tag everytime you build a new image, or use the image SHA
+        image: gcr.io/cnuc-anthos-quest/custom-metrics-prometheus:v4
+        imagePullPolicy: Always
+        name: pos-metrics-prometheus
+        env:
+        - name: STORE_PROPERTIES
+          value: "store-usa-234-2.properties"
+        - name: FRANCHISE_PROPERTIES
+          value: "franchise-usa-234.properties"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 45
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        ports:
+        - containerPort:  8080
+        volumeMounts:
+        - mountPath: /store-config
+          name: store-config-volume
+
+      volumes:
+        - name: store-config-volume
+          configMap:
+            name: store-config
+      restartPolicy: Always
