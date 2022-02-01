@@ -14,7 +14,7 @@ In this example we have a SpringBoot application that emits business metrics usi
 ## Prereq
 We assume you are in the correct K8s context and GCP project is set. 
 It is important that you enable **Workload Identity** feature for the GKE during creation. 
-Also, please enable Cloud Monitoring from the Features tab, and select Workload checkbox.
+Also, please enable **Cloud Monitoring** from the **Features** tab, and select **Workload** checkbox.
 
 ## Setup the metrics pipeline
 ```
