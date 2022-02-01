@@ -2,8 +2,8 @@
 If you want to build this app refer to [this](application-overview-and-build.md).
 If you want to use the existing image you can continue reading this doc. 
 
-# Managed prometheus on GKE
-Managed prometheus provided by Google Cloud allows users to setup a fully managed Prometheus monitoring pipeline on GKE and storage using Cloud Ops metrics storage. 
+# Google Cloud Managed Service for Prometheus
+[**Google Cloud Managed Service for Prometheus**](https://cloud.google.com/stackdriver/docs/managed-prometheus) allows users to setup a fully managed Prometheus monitoring pipeline on GKE and storage using Cloud Ops metrics storage. 
 The Cloud Ops monitoring has a special explorer for managed promethes which gives you ability to explore the prometheus metrics using PromQL. 
 Prometheus has become a standard for monitoring Kubernetes metrics. However, seting up scaling and maintaing the Promtheus is a challenge. Promtheus server also becomes a single point of failure. Moreover, the Prometheus is not designed for long-term metrics storage so you again have to find a way to sink the metrics in a long term time series storage which allows you to use and analyze the metrics. 
 Managed Prometheus by Google Cloud is a designed to address these challenges while retaining the flexibility and standardization of Prometheus. 
