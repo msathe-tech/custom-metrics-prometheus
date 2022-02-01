@@ -29,22 +29,23 @@ Managed Service for Prometheus captures metric data by using the Cloud Monitorin
 
 Create and bind the service account: 
 ```
+export PROJECT_ID=[your-gcp-project-id]
 gcloud iam service-accounts create gmp-test-sa \
 &&
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:[your-gcp-project-id].svc.id.goog[gmp-test/default]" \
-  gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com \
+  --member "serviceAccount:${PROJECT_ID}.svc.id.goog[gmp-test/default]" \
+  gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com \
 &&
 kubectl annotate serviceaccount \
   --namespace gmp-test \
   default \
-  iam.gke.io/gcp-service-account=gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com
+  iam.gke.io/gcp-service-account=gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com
 ```
 Authorize the service account:
 ```
-gcloud projects add-iam-policy-binding [your-gcp-project-id]\
-  --member=serviceAccount:gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding ${PROJECT_ID}\
+  --member=serviceAccount:gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com \
   --role=roles/monitoring.metricWriter
 ```
 
@@ -55,4 +56,14 @@ Now deploy the app along with Pod Monitoring CR that contains the scraping locat
 kubectl apply -f k8s-yamls/cm.yaml -n gmp-test
 kubectl apply -f k8s-yamls/deployment.yaml -n gmp-test
 kubectl apply -f k8s-yamls/gke-pod-mon.yaml -n gmp-test
+```
+
+## Optional: add roles to stream application logs
+```
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/logging.logWriter" --no-user-output-enabled
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/stackdriver.resourceMetadata.writer" --no-user-output-enabled
 ```
