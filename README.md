@@ -1,5 +1,6 @@
 # Overview
-If you want to build this app refer to [this](application-overview-and-build.md)
+If you want to build this app refer to [this](application-overview-and-build.md).
+If you want to use the existing image you can continue reading this doc. 
 
 # Managed prometheus on GKE
 Managed prometheus provided by Google Cloud allows users to setup a fully managed Prometheus monitoring pipeline on GKE and storage using Cloud Ops metrics storage. 
