@@ -16,7 +16,7 @@ EXISTS=$(gcloud iam service-accounts list --filter="email=${GSA_EMAIL}" --format
 if [[ -z "${EXISTS}" ]]; then
     # GSA does NOT exist, create
     gcloud iam service-accounts create ${GSA_NAME} \
-        --description="Promtheus Stackdriver service account" \
+        --description="Prometheus Stackdriver service account" \
         --display-name="Prometheus Stackdriver" \
         --project ${PROJECT_ID}
 else
