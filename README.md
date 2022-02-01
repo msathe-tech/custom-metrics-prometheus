@@ -1,116 +1,57 @@
-# Overview 
-This application demonstrates custom metrics and logs emitted by Spring Boot application.
-For custom metrics we are using Micrometer integration. 
-We will emit 3 types of metrics - counter, gauge and timer. 
+# Overview
+If you want to build this app refer to (this)[application-overview-and-build.md]
 
-To run the application locally and specify the country, franchise ID, and store ID:
-```
-COUNTRY=usa FRANCHISE_ID=123 STORE_ID=1 ./mvnw spring-boot:run
-```
+# Managed prometheus on GKE
+Managed prometheus provided by Google Cloud allows users to setup a fully managed Prometheus monitoring pipeline on GKE and storage using Cloud Ops metrics storage. 
+The Cloud Ops monitoring has a special explorer for managed promethes which gives you ability to explore the prometheus metrics using PromQL. 
+Prometheus has become a standard for monitoring Kubernetes metrics. However, seting up scaling and maintaing the Promtheus is a challenge. Promtheus server also becomes a single point of failure. Moreover, the Prometheus is not designed for long-term metrics storage so you again have to find a way to sink the metrics in a long term time series storage which allows you to use and analyze the metrics. 
+Managed Prometheus by Google Cloud is a designed to address these challenges while retaining the flexibility and standardization of Prometheus. 
+In upcoming versions of GKE more out-of-box support will be provided so several of the steps listed in this doc will not be required in future versions of GKE. 
 
-You can also use env variable 
-```
-export COUNTRY=usa
-export FRANCHISE_ID=123
-export STORE_ID=1
-./mvnw spring-boot:run
-```
+In this example we have a SpringBoot application that emits business metrics using Promtheus. The metrics are exposed using actuator endpoint. 
 
-Naming convention for franchise YAML
-```
-franchise-$COUNTRY-$FRANCHISE_ID.yaml
-```
+## Prereq
+We assume you are in the correct K8s context and GCP project is set. 
+It is important that you enable **Workload Identity** feature for the GKE during creation. 
+Also, please enable Cloud Monitoring from the Features tab, and select Workload checkbox.
 
-Naming convention for store YAML
+## Setup the metrics pipeline
 ```
-store-$COUNTRY-$FRANCHISE_ID-$STORE_ID.yaml
+kubectl create ns gmp-test
+kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/setup.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/operator.yaml
 ```
 
-To add a new franchise say 9999 with store 99 create two files
+## Setup the service account for Workload Identity. 
+Managed Service for Prometheus captures metric data by using the Cloud Monitoring API. If your cluster is using Workload Identity, you must grant your Kubernetes service account permission to the Monitoring API. 
+
+Create and bind the service account: 
 ```
-store-usa-9999-99.properties
-franchise-usa-9999.properties
+gcloud iam service-accounts create gmp-test-sa \
+&&
+gcloud iam service-accounts add-iam-policy-binding \
+  --role roles/iam.workloadIdentityUser \
+  --member "serviceAccount:us-se4-shared.svc.id.goog[gmp-test/default]" \
+  gmp-test-sa@us-se4-shared.iam.gserviceaccount.com \
+&&
+kubectl annotate serviceaccount \
+  --namespace gmp-test \
+  default \
+  iam.gke.io/gcp-service-account=gmp-test-sa@us-se4-shared.iam.gserviceaccount.com
 ```
-
-To create a store configuration:
-
-cd k8s
-COUNTRY=usa FRANCHISE_ID=234 STORE_ID=2 ./render.sh -t=v3
-
-To deploy the app to GKE:
-cd k8s
-COUNTRY=usa FRANCHISE_ID=123 STORE_ID=1 CLUSTER_NUM=1 ./apply.sh
-
-To deploy the app to CNUC:
-
-cd k8s
-./cnuc-apply.sh -c=USA -f=123 -s=1 -p=cnuc-anthos-quest -h=34.74.212.144
-
-Access the metrics using [Host]:[Port]/actuator/prometheus/. 
-For local access use localhost:8080. 
-
-### Metrics
-This application emits following metrics to demonstrate performance of a hypothetical restaurant. 
-
-* *Order* (counter) - Order number 
-* *CurrentOrders* (gauge) - Current pending orders 
-* *OrderProcessedTime* (timer) - Order processing time
-* *LastOrderProcessedTime* (gauge) - Order processing time for the last order
-
-### Logs
-
-Logs are emitted in the following format - 
-* UUID = [UUID]
-* Store-OrderNumber = [order-counter]
-* Order started - Time = [start-time hh:mm]
-* Order started - Time = [finish-time hh:mm]
-  
+Authorize the service account:
 ```
-2021-05-04 06:41:36.391 INFO 1 --- [ scheduling-1] ricsPrometheusApplication$MetricsEmitter : UUID = 9ef79409-f821-417e-bd4a-54ebd9ac1029
-Info
-2021-05-04 02:41:33.392 EDT
-Order finished - Time = 06:41
-Info
-2021-05-04 02:41:33.392 EDT
-Order started - Time = 06:36
-Info
-2021-05-04 02:41:33.392 EDT
-Store-OrderNumber = 756.0
-Info
-2021-05-04 02:41:33.392 EDT
-2021-05-04 06:41:33.391 INFO 1 --- [ scheduling-1] ricsPrometheusApplication$MetricsEmitter : UUID = ae27781a-ebda-4716-816d-b75b935509a9
-Info
-2021-05-04 02:41:30.392 EDT
-Order finished - Time = 06:41
-Info
-2021-05-04 02:41:30.392 EDT
-Order started - Time = 06:37
-Info
-2021-05-04 02:41:30.392 EDT
-Store-OrderNumber = 755.0
-Info
-2021-05-04 02:41:30.392 EDT
+gcloud projects add-iam-policy-binding us-se4-shared\
+  --member=serviceAccount:gmp-test-sa@us-se4-shared.iam.gserviceaccount.com \
+  --role=roles/monitoring.metricWriter
 ```
 
-### Create container 
-Login to gcloud and then 
-```
-PROJECT_ID=anthos-quest
-gcloud builds submit ./  --tag=gcr.io/$PROJECT_ID/custom-metrics-prometheus:v[n]
-```
-You can use Dockerhub to publish the image. 
-**Please note** you will need to add ```docker-username``` and ```docker-password``` secrets in the secrets manager. 
-```
-gcloud builds submit ./ --config cloud-build-steps.yaml
-```
 
-You can also create container using [Cloud Native Buildpacks](https://buildpacks.io/). 
-Following commands shows how to use build-image option command in spring-boot. 
+## Deploy the app along with scraping rule
+Now deploy the app along with Pod Monitoring CR that contains the scraping location of the app.
 ```
-REGISTRY_HOST=gcr.io
-./mvnw spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=$REGISTRY_HOST/$PROJECT_ID/custom-metrics-prometheus:latest
+kubectl apply -f k8s-yamls/cm.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f gke-pod-mon.yaml
 ```
-
-### Create service account for Prometheus (GKE only)
-PROJECT_ID=anthos-quest
-./k8s/create-sa.sh
