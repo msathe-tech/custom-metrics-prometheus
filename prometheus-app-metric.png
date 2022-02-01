@@ -2,10 +2,10 @@
 <html lang="en"><head><title>screenshot.googleplex.com - MOMA Single Sign On: Sign into corp</title>
 <link href="/c/login.css" rel="stylesheet" />
 <link rel="icon" href="/c/favicon.ico" type="image/x-icon" />
-<script type="text/javascript" src="/c/corploginscript.js" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" src="/c/corploginscript.js" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
         
       </script>
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
         
         otpParam = "otp";
         useOtp = 1;
@@ -32,7 +32,7 @@
 <br />
 
 <div role="main"><form method="post" id="loginForm" name="loginForm" action="/login"><input type="hidden" id="s" name="s" value="screenshot.googleplex.com:443/uberproxy/"/>
-<input type="hidden" id="d" name="d" value="https://screenshot.googleplex.com/3LyiAScaS3FwE2u.png?upxsrf=AO9zFu3kE_fZtcswyBYLpaWr5XkRK_p9sM-WdeEmPsnm921mfg:1643747775658"/>
+<input type="hidden" id="d" name="d" value="https://screenshot.googleplex.com/3LyiAScaS3FwE2u.png?upxsrf=AO9zFu2tF6A4uJrD34yW5_8nFg-UfRmBtOt1YJsA0rYyIThkKg:1643748268463"/>
 <input type="hidden" id="keyIds" name="keyIds" value="p2T,ul2"/>
 <input type="hidden" id="maxAge" name="maxAge" value="1200"/>
 <input type="hidden" id="authLevel" name="authLevel" value="2000000"/>
@@ -41,7 +41,7 @@
 <input type="hidden" id="interactive" name="interactive" value="yes" />
 <input type="hidden" id="hasJavascript" name="hasJavascript" value="no" />
 <input type="hidden" id="mi" name="mi" value="" />
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
               
               fillMiField();
             </script>
@@ -54,7 +54,7 @@
 <span style="font-size: 83%; position: relative; bottom: 2px;"><span style="padding: 0 3px 0 5px;">@</span>
 google.com
 <a href="#" id="roleToggle" style="color:black; text-decoration: none" role="button" aria-expanded="aria-expanded" aria-label="Expand to show role account input">[+]</a>
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
                 
                 document.getElementById('roleToggle').onclick = function(e) {
                   e.preventDefault();
@@ -75,14 +75,14 @@ google.com
 <table border="0" width="100%" style="padding-top: 10px;" role="presentation"><tr><td align="left"></td>
 <td align="right"><font size="-1"><a href="https://static.corp.google.com/corpsso/techstop/techstop-phones.html">Security Key help</a></font></td></tr>
 <tr><td colspan="2" align="right"><font size="-1"><a href="https://static.corp.google.com/corpsso/techstop/techstop-phones.html">Password help</a></font></td></tr></table></td>
-<td class="image-cell" valign="top"><div id="corplogin-image"><img class="login-image" src="https://static.corp.google.com/corpsso/images/bariloche_argentina.jpg" width="400" height="300" alt="" /></div></td></tr></table></form></div>
+<td class="image-cell" valign="top"><div id="corplogin-image"><img class="login-image" src="https://static.corp.google.com/corpsso/images/b45utilityaccess.png" width="340" height="300" alt="" /></div></td></tr></table></form></div>
 <div id="interstitial-warning-touchid" class="ssobox gnubby-signin hidden"><p>You&#39;ve successfully signed in and will be redirected in 10 seconds</p>
 <p class="errormsg">Touch ID for sign on will stop working 2021-03-31.</p>
 <p>Start using a physical security key *NOW*. To learn more, visit <a target="_blank" href="http://go/touchid-faq?utm_source=corpsso&amp;utm_medium=interstitial&amp;utm_campaign=TouchIdVerificationWarning">go/touchid-faq</a>.</p></div>
 <div id="interstitial-warning-fedramp" class="fedramp-warning ssobox gnubby-signin hidden"><p>You&#39;ve successfully signed in and will be redirected in 10 seconds</p>
 <p class="errormsg">You didn&#39;t use a Titan Security Key as required</p>
 <p>Visit <a href="http://go/fedramp-compliance">go/fedramp-compliance</a> to learn why you need to use a Titan Key</p></div>
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
     
     
     interstitialWarningDurationMs = 10000;
@@ -96,13 +96,13 @@ google.com
 <td class="bubble tr"><img src="/c/tr.gif" alt="" /></td></tr>
 <tr><td class="bubble bl"><img src="/c/bl.gif" alt="" /></td>
 <td class="bubble br"><img src="/c/br.gif" alt="" /></td></tr></table></td></tr></table></td>
-<td width="1%"><a id="gnubbyLinkFooter" href="https://login.corp.google.com/request?s=screenshot.googleplex.com:443/uberproxy/&amp;d=https://screenshot.googleplex.com/3LyiAScaS3FwE2u.png?upxsrf%3DAO9zFu3kE_fZtcswyBYLpaWr5XkRK_p9sM-WdeEmPsnm921mfg:1643747775658&amp;maxAge=1200&amp;authLevel=2000000&amp;keyIds=p2T,ul2"><img src="/c/balls.gif" border="0" alt="Sign in using Security Key" align="left" vspace="13" /></a>
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<td width="1%"><a id="gnubbyLinkFooter" href="https://login.corp.google.com/request?s=screenshot.googleplex.com:443/uberproxy/&amp;d=https://screenshot.googleplex.com/3LyiAScaS3FwE2u.png?upxsrf%3DAO9zFu2tF6A4uJrD34yW5_8nFg-UfRmBtOt1YJsA0rYyIThkKg:1643748268463&amp;maxAge=1200&amp;authLevel=2000000&amp;keyIds=p2T,ul2"><img src="/c/balls.gif" border="0" alt="Sign in using Security Key" align="left" vspace="13" /></a>
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
             
             document.getElementById('gnubbyLinkFooter').onclick = setGnubbyCookie;
           </script></td></tr></table>
 
-<script type="text/javascript" nonce="oNA/JihYhr/MQxJaGKCooA">
+<script type="text/javascript" nonce="EKSa0EDjd5HY+f4xKkJ+5w">
       
       document.getElementById('loginForm').onsubmit = signInOnSubmit;
       document.body.onload = function() {
