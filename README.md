@@ -33,18 +33,18 @@ gcloud iam service-accounts create gmp-test-sa \
 &&
 gcloud iam service-accounts add-iam-policy-binding \
   --role roles/iam.workloadIdentityUser \
-  --member "serviceAccount:us-se4-shared.svc.id.goog[gmp-test/default]" \
-  gmp-test-sa@us-se4-shared.iam.gserviceaccount.com \
+  --member "serviceAccount:[your-gcp-project-id].svc.id.goog[gmp-test/default]" \
+  gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com \
 &&
 kubectl annotate serviceaccount \
   --namespace gmp-test \
   default \
-  iam.gke.io/gcp-service-account=gmp-test-sa@us-se4-shared.iam.gserviceaccount.com
+  iam.gke.io/gcp-service-account=gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com
 ```
 Authorize the service account:
 ```
-gcloud projects add-iam-policy-binding us-se4-shared\
-  --member=serviceAccount:gmp-test-sa@us-se4-shared.iam.gserviceaccount.com \
+gcloud projects add-iam-policy-binding [your-gcp-project-id]\
+  --member=serviceAccount:gmp-test-sa@[your-gcp-project-id].iam.gserviceaccount.com \
   --role=roles/monitoring.metricWriter
 ```
 
