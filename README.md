@@ -58,6 +58,11 @@ kubectl apply -f k8s-yamls/deployment.yaml -n gmp-test
 kubectl apply -f k8s-yamls/gke-pod-mon.yaml -n gmp-test
 ```
 
+# Verify the custom metrics in Cloud Ops Monitoring
+Navigate to Cloud Ops > Monitoring > Managed Prometheus.
+In the PromQL Query section enter **Store_OrderQueue** and click Run Query.
+![Custom Metrics](prometheus-app-metric.png)
+
 ## Optional: add roles to stream application logs
 ```
 gcloud projects add-iam-policy-binding $PROJECT_ID \
