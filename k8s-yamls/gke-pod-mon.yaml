@@ -12,3 +12,4 @@ spec:
   - port: 8080
     interval: 30s
     path: '/actuator/prometheus'
+    
