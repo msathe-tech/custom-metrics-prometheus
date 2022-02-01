@@ -6,7 +6,7 @@ If you want to use the existing image you can continue reading this doc.
 [**Google Cloud Managed Service for Prometheus**](https://cloud.google.com/stackdriver/docs/managed-prometheus) allows users to setup a fully managed Prometheus monitoring pipeline on GKE and storage using Cloud Ops metrics storage. 
 The Cloud Ops monitoring has a special explorer for managed Prometheus which gives you ability to explore the prometheus metrics using PromQL. 
 Prometheus has become a standard for monitoring Kubernetes metrics. However, seting up scaling and maintaing the Prometheus is a challenge. Prometheus server also becomes a single point of failure. Moreover, the Prometheus is not designed for long-term metrics storage so you again have to find a way to sink the metrics in a long term time series storage which allows you to use and analyze the metrics. 
-Managed Prometheus by Google Cloud is a designed to address these challenges while retaining the flexibility and standardization of Prometheus. 
+Google Cloud Managed Service for Prometheus is a designed to address these challenges while retaining the flexibility and standardization of Prometheus. 
 In upcoming versions of GKE more out-of-box support will be provided so several of the steps listed in this doc will not be required in future versions of GKE. 
 
 In this example we have a SpringBoot application that emits business metrics using Prometheus. The metrics are exposed using actuator endpoint. 
