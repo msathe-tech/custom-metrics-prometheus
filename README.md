@@ -53,6 +53,6 @@ gcloud projects add-iam-policy-binding us-se4-shared\
 Now deploy the app along with Pod Monitoring CR that contains the scraping location of the app.
 ```
 kubectl apply -f k8s-yamls/cm.yaml
-kubectl apply -f deployment.yaml
-kubectl apply -f gke-pod-mon.yaml
+kubectl apply -f k8s-yamls/deployment.yaml
+kubectl apply -f k8s-yamls/gke-pod-mon.yaml
 ```
