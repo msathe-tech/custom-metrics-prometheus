@@ -48,6 +48,14 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID}\
   --member=serviceAccount:gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com \
   --role=roles/monitoring.metricWriter
 ```
+### Annotate SA in Kubernetes
+If you already have setup GCP SA and policies are added to the SA then you only need to **annotate** SA in the Kubernetes.
+```
+kubectl annotate serviceaccount \
+  --namespace gmp-test \
+  default \
+  iam.gke.io/gcp-service-account=gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com
+```
 
 
 ## Deploy the app along with scraping rule
