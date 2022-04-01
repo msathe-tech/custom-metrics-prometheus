@@ -8,11 +8,11 @@ data:
     Franchise.COUNTRY=USA
   store-usa-123-1.properties: |
     Franchise.STORE=1
-    Franchise.CITY=Magnolia
-    Franchise.STATE=NJ
-    Franchise.ZIP=08049
-    Franchise.LATITUDE=39.86234
-    Franchise.LONGITUDE=-75.03395
+    Franchise.CITY=New York City
+    Franchise.STATE=NY
+    Franchise.ZIP=10011
+    Franchise.LATITUDE=40.7128° N
+    Franchise.LONGITUDE=-74.0060° W
 kind: ConfigMap
 metadata:
   creationTimestamp: null
