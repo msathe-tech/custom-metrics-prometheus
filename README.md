@@ -61,9 +61,9 @@ kubectl annotate serviceaccount \
 ## Deploy the app along with scraping rule
 Now deploy the app along with Pod Monitoring CR that contains the scraping location of the app.
 ```
-kubectl apply -f k8s-yamls/cm.yaml 
-kubectl apply -f k8s-yamls/deployment.yaml 
-kubectl apply -f k8s-yamls/gke-pod-mon.yaml
+kubectl apply -f k8s-yamls/cm.yaml -n gmp-test
+kubectl apply -f k8s-yamls/deployment.yaml -n gmp-test
+kubectl apply -f k8s-yamls/gke-pod-mon.yaml -n gmp-test
 ```
 
 # Verify the custom metrics in Cloud Ops Monitoring
