@@ -43,16 +43,16 @@ It is important that you enable **Workload Identity** feature for the GKE during
 Also, please enable **Enable Managed Service for Prometheus** from the **Features** tab.
 ![Managed Service for Prometheus](ManagedServicePrometheus.png?raw=true)
 
-## Create a namespace for the demo
-```
-kubectl create ns gmp-test
-```
-
-## [ONLY for older GKE versions] Setup the metrics pipeline 
-Following is not required if you enabled the **Managed Service for Prometheus** as shown above. 
+## [ONLY if the GKE already existed] Setup the metrics pipeline 
+Following is not required if you enabled the **Managed Service for Prometheus** while creating the cluster. 
 ```
 kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/setup.yaml
 kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/operator.yaml
+```
+
+## Create a namespace for the demo
+```
+kubectl create ns gmp-test
 ```
 
 ## Annotate SA in Kubernetes
