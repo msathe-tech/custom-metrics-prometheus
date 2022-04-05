@@ -11,19 +11,6 @@ Please check [GCP documentation](https://cloud.google.com/stackdriver/docs/manag
 
 In this example we have a SpringBoot application that emits business metrics using Prometheus. The metrics are exposed using actuator endpoint. 
 
-## Prereq
-We assume you are in the correct K8s context and GCP project is set. 
-It is important that you enable **Workload Identity** feature for the GKE during creation. 
-Also, please enable **Cloud Monitoring** from the **Features** tab.
-
-## Setup the metrics pipeline
-```
-kubectl create ns gmp-test
-kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/setup.yaml
-
-kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/operator.yaml
-```
-
 ## Setup the service account for Workload Identity. 
 Managed Service for Prometheus captures metric data by using the Cloud Monitoring API. If your cluster is using Workload Identity, you must grant your Kubernetes service account permission to the Monitoring API. 
 
@@ -48,8 +35,28 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID}\
   --member=serviceAccount:gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com \
   --role=roles/monitoring.metricWriter
 ```
-### Annotate SA in Kubernetes
-If you already have setup GCP SA and policies are added to the SA then you only need to **annotate** SA in the Kubernetes.
+The GCP Service Account is across the project so you don't have to repeat this step for every cluster. 
+
+## Setup a GKE cluster
+We assume you are in the correct K8s context and GCP project is set. 
+It is important that you enable **Workload Identity** feature for the GKE during creation. 
+Also, please enable **Enable Managed Service for Prometheus** from the **Features** tab.
+![Managed Service for Prometheus](ManagedServicePrometheus.png?raw=true)
+
+## Create a namespace for the demo
+```
+kubectl create ns gmp-test
+```
+
+## [ONLY for older GKE versions] Setup the metrics pipeline 
+Following is not required if you enabled the **Managed Service for Prometheus** as shown above. 
+```
+kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/setup.yaml
+kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/prometheus-engine/v0.2.1/manifests/operator.yaml
+```
+
+## Annotate SA in Kubernetes
+You need to **annotate** SA in the Kubernetes.
 ```
 kubectl annotate serviceaccount \
   --namespace gmp-test \
@@ -57,9 +64,8 @@ kubectl annotate serviceaccount \
   iam.gke.io/gcp-service-account=gmp-test-sa@${PROJECT_ID}.iam.gserviceaccount.com
 ```
 
-
 ## Deploy the app along with scraping rule
-Now deploy the app along with Pod Monitoring CR that contains the scraping location of the app.
+Now deploy the app along with Pod Monitoring CR that contains the scraping location of the app. 
 ```
 kubectl apply -f k8s-yamls/cm.yaml -n gmp-test
 kubectl apply -f k8s-yamls/deployment.yaml -n gmp-test
