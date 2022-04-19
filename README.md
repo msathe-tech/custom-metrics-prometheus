@@ -69,7 +69,7 @@ Now deploy the app along with Pod Monitoring CR that contains the scraping locat
 This application showcases a retail edge use case. Each instance of an application represents a retail store with apps running at the store edge. 
 This application exposes guage, histrogram and counter metrics. 
 Each of these metrics use various business dimensions such as city, region, store ID, franchise, etc. 
-The Config Map used here has the details of the store. You can edit the (cm.yaml)[k8s-yamls/cm.yaml] or create multiple copies, each to represent a different store and deploy it on different GKE clusters. The app in the respective cluster will pick the values from the config map. 
+The Config Map used here has the details of the store. You can edit the [cm.yaml](k8s-yamls/cm.yaml) or create multiple copies, each to represent a different store and deploy it on different GKE clusters. The app in the respective cluster will pick the values from the config map. 
 ```
 kubectl apply -f k8s-yamls/cm.yaml -n gmp-test
 kubectl apply -f k8s-yamls/deployment.yaml -n gmp-test
